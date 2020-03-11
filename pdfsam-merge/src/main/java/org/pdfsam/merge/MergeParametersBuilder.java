@@ -18,17 +18,18 @@
  */
 package org.pdfsam.merge;
 
-import java.util.Set;
-
 import org.pdfsam.support.params.AbstractPdfOutputParametersBuilder;
 import org.pdfsam.support.params.SingleOutputTaskParametersBuilder;
-import org.sejda.common.collection.NullSafeSet;
 import org.sejda.model.input.PdfMergeInput;
 import org.sejda.model.outline.OutlinePolicy;
 import org.sejda.model.output.FileTaskOutput;
 import org.sejda.model.parameter.MergeParameters;
 import org.sejda.model.pdf.form.AcroFormPolicy;
+import org.sejda.model.pdf.page.PageRange;
 import org.sejda.model.toc.ToCPolicy;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Builder for {@link MergeParameters}
@@ -39,7 +40,9 @@ import org.sejda.model.toc.ToCPolicy;
 class MergeParametersBuilder extends AbstractPdfOutputParametersBuilder<MergeParameters>
         implements SingleOutputTaskParametersBuilder<MergeParameters> {
 
-    private Set<PdfMergeInput> inputs = new NullSafeSet<>();
+    //private Set<PdfMergeInput> inputs = new NullSafeSet<>();
+    private ArrayList<PdfMergeInput> inputs = new ArrayList<>();
+    //private Multiset<PdfMergeInput> inputs = new HashMultiSet<>();
     private OutlinePolicy outlinePolicy = OutlinePolicy.RETAIN;
     private boolean blankIfOdd;
     private boolean footer;
@@ -49,7 +52,13 @@ class MergeParametersBuilder extends AbstractPdfOutputParametersBuilder<MergePar
     private FileTaskOutput output;
 
     void addInput(PdfMergeInput input) {
-        this.inputs.add(input);
+
+        for(PageRange pagerange : input.getPageSelection()) {
+            for(int pagenumber : pagerange.getPages(pagerange.getEnd())) {
+                PdfMergeInput newInput = new PdfMergeInput(input.getSource(), Set.of(new PageRange(pagenumber, pagenumber)));
+                this.inputs.add(newInput);
+            }
+        }
     }
 
     boolean hasInput() {
