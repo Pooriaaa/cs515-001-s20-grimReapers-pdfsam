@@ -18,10 +18,6 @@
  */
 package org.pdfsam.rotate;
 
-import static java.util.Objects.isNull;
-
-import java.util.Set;
-
 import org.pdfsam.support.params.AbstractPdfOutputParametersBuilder;
 import org.pdfsam.support.params.MultipleOutputTaskParametersBuilder;
 import org.pdfsam.task.BulkRotateParameters;
@@ -32,6 +28,10 @@ import org.sejda.model.output.SingleOrMultipleTaskOutput;
 import org.sejda.model.pdf.page.PageRange;
 import org.sejda.model.pdf.page.PredefinedSetOfPages;
 import org.sejda.model.rotation.Rotation;
+
+import java.util.Set;
+
+import static java.util.Objects.isNull;
 
 /**
  * Builder for {@link BulkRotateParameters}
@@ -47,12 +47,27 @@ class RotateParametersBuilder extends AbstractPdfOutputParametersBuilder<BulkRot
     private Set<PdfRotationInput> inputs = new NullSafeSet<>();
     private Rotation rotation;
     private PredefinedSetOfPages predefinedRotationType;
-
+    Set<PageRange> pages=new NullSafeSet<>();
     void addInput(PdfSource<?> source, Set<PageRange> pageSelection) {
         if (isNull(pageSelection) || pageSelection.isEmpty()) {
             this.inputs.add(new PdfRotationInput(source, rotation, predefinedRotationType));
         } else {
-            this.inputs.add(new PdfRotationInput(source, rotation, pageSelection.stream().toArray(PageRange[]::new)));
+            for (PageRange pagerange : pageSelection) {
+                if (predefinedRotationType == PredefinedSetOfPages.ODD_PAGES){
+                    for (int num = pagerange.getStart(); num <= pagerange.getEnd(); num++)
+                        if (num % 2 != 0)
+                            pages.add(new PageRange(num, num));
+                }
+                else if (predefinedRotationType == PredefinedSetOfPages.EVEN_PAGES) {
+                    for (int num = pagerange.getStart(); num <= pagerange.getEnd(); num++)
+                        if (num % 2 == 0)
+                            pages.add(new PageRange(num, num));
+                }
+                else
+                    this.inputs.add(new PdfRotationInput(source, rotation, pageSelection.stream().toArray(PageRange[]::new)));
+
+            }
+            this.inputs.add(new PdfRotationInput(source, rotation, pages.stream().toArray(PageRange[]::new)));
         }
     }
 
