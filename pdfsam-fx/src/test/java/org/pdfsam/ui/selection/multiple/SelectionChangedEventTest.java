@@ -72,15 +72,7 @@ public class SelectionChangedEventTest {
         stream(MoveType.values()).forEach(m -> assertFalse(victim.canMove(m)));
     }
 
-    @Test
-    public void canMoveUp() {
-        assertTrue(select(asList(2, 3)).ofTotalRows(5).canMove(MoveType.UP));
-    }
-
-    @Test
-    public void cantMoveUp() {
-        assertFalse(select(asList(0, 3)).ofTotalRows(5).canMove(MoveType.UP));
-    }
+   
 
     @Test
     public void cantMoveBottom() {

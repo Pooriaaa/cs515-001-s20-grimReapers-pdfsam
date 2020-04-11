@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.pdfsam</groupId>
 		<artifactId>pdfsam-parent</artifactId>
-		<version>4.1.2-SNAPSHOT</version>
+		<version>4.0.5</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -27,7 +27,7 @@
 			<artifactId>sejda-model</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.pdfsam</groupId>
+			<groupId>org.sejda</groupId>
 			<artifactId>eventstudio</artifactId>
 		</dependency>
 		<dependency>
@@ -54,8 +54,8 @@
 			<version>${logback.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.pdfsam</groupId>
-			<artifactId>pdfsam-injector</artifactId>
+			<groupId>org.sejda</groupId>
+			<artifactId>sejda-injector</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.inject</groupId>

@@ -21,18 +21,13 @@ package org.pdfsam.ui.prefix;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 import static org.pdfsam.ui.help.HelpUtils.helpIcon;
-import static org.pdfsam.eventstudio.StaticStudio.eventStudio;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang3.StringUtils;
-import org.pdfsam.context.UserContext;
 import org.pdfsam.i18n.DefaultI18nContext;
 import org.pdfsam.i18n.I18nContext;
-import org.pdfsam.module.ModuleOwned;
-import org.pdfsam.module.TaskExecutionRequestEvent;
 import org.pdfsam.support.params.MultipleOutputTaskParametersBuilder;
 import org.pdfsam.support.params.TaskParametersBuildStep;
 import org.pdfsam.ui.ResettableView;
@@ -51,15 +46,11 @@ import javafx.scene.text.TextFlow;
  * @author Andrea Vacondio
  *
  */
-public class PrefixPane extends HBox implements TaskParametersBuildStep<MultipleOutputTaskParametersBuilder<?>>,
-        RestorableView, ResettableView, ModuleOwned {
-    private PrefixField field;
+public class PrefixPane extends HBox
+        implements TaskParametersBuildStep<MultipleOutputTaskParametersBuilder<?>>, RestorableView, ResettableView {
+    private PrefixField field = new PrefixField();
 
-    private String ownerModule = StringUtils.EMPTY;
-
-    public PrefixPane(String ownerModule, UserContext userContext) {
-        this.ownerModule = defaultString(ownerModule);
-        this.field = new PrefixField(userContext.getDefaultPrefix(this.ownerModule));
+    public PrefixPane() {
         getStyleClass().addAll(Style.CONTAINER.css());
         getStyleClass().addAll(Style.HCONTAINER.css());
         I18nContext ctx = DefaultI18nContext.getInstance();
@@ -70,11 +61,6 @@ public class PrefixPane extends HBox implements TaskParametersBuildStep<Multiple
                                 new Text(ctx.i18n("Some special keywords are replaced with runtime values.")
                                         + System.lineSeparator()),
                         new Text(ctx.i18n("Right click to add these keywords.")))));
-        eventStudio().add(TaskExecutionRequestEvent.class, e -> {
-            if (ownerModule.equals(e.getModuleId())) {
-                userContext.setDefaultPrefix(this.ownerModule, field.getText());
-            }
-        });
     }
 
     public void addMenuItemFor(Prefix... prefixes) {
@@ -92,11 +78,6 @@ public class PrefixPane extends HBox implements TaskParametersBuildStep<Multiple
     @Override
     public void resetView() {
         field.resetView();
-    }
-
-    @Override
-    public String getOwnerModule() {
-        return ownerModule;
     }
 
     @Override
