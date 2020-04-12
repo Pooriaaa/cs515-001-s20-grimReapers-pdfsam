@@ -19,8 +19,8 @@
 package org.pdfsam.ui.io;
 
 import static java.util.Objects.nonNull;
-import static org.pdfsam.support.RequireUtils.requireNotNull;
-import static org.sejda.eventstudio.StaticStudio.eventStudio;
+import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
+import static org.pdfsam.eventstudio.StaticStudio.eventStudio;
 
 import java.util.Arrays;
 
@@ -31,8 +31,8 @@ import org.pdfsam.i18n.DefaultI18nContext;
 import org.pdfsam.module.ModuleOwned;
 import org.pdfsam.ui.ResettableView;
 import org.pdfsam.ui.io.PdfVersionCombo.PdfVersionComboItem;
-import org.sejda.eventstudio.annotation.EventListener;
-import org.sejda.eventstudio.annotation.EventStation;
+import org.pdfsam.eventstudio.annotation.EventListener;
+import org.pdfsam.eventstudio.annotation.EventStation;
 import org.sejda.model.pdf.PdfVersion;
 
 import javafx.collections.FXCollections;
@@ -134,7 +134,7 @@ class PdfVersionCombo extends ComboBox<PdfVersionComboItem> implements ModuleOwn
         private PdfVersion version;
 
         public DefaultPdfVersionComboItem(PdfVersion version) {
-            requireNotNull(version, "PDF version cannot be null");
+            requireNotNullArg(version, "PDF version cannot be null");
             this.version = version;
         }
 
