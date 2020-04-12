@@ -29,9 +29,6 @@ import javax.inject.Named;
 
 import org.pdfsam.context.UserContext;
 import org.pdfsam.i18n.DefaultI18nContext;
-import org.pdfsam.injector.Auto;
-import org.pdfsam.injector.Components;
-import org.pdfsam.injector.Provides;
 import org.pdfsam.module.ModuleCategory;
 import org.pdfsam.module.ModuleDescriptor;
 import org.pdfsam.module.ModuleInputOutputType;
@@ -43,8 +40,11 @@ import org.pdfsam.ui.module.BaseTaskExecutionModule;
 import org.pdfsam.ui.module.Footer;
 import org.pdfsam.ui.module.OpenButton;
 import org.pdfsam.ui.module.RunButton;
-import org.pdfsam.eventstudio.annotation.EventListener;
-import org.pdfsam.eventstudio.annotation.EventStation;
+import org.sejda.eventstudio.annotation.EventListener;
+import org.sejda.eventstudio.annotation.EventStation;
+import org.sejda.injector.Auto;
+import org.sejda.injector.Components;
+import org.sejda.injector.Provides;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;

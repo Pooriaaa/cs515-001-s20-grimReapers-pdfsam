@@ -18,9 +18,9 @@
  */
 package org.pdfsam.ui.selection.multiple;
 
-import static org.sejda.commons.util.RequireUtils.requireArg;
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
-import static org.sejda.commons.util.RequireUtils.requireState;
+import static org.pdfsam.support.RequireUtils.require;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
+import static org.pdfsam.support.RequireUtils.requireState;
 
 import java.util.Collection;
 
@@ -40,7 +40,7 @@ final class SelectionChangedEvent {
     private int totalRows = 0;
 
     private SelectionChangedEvent(Collection<? extends Integer> selected) {
-        requireNotNullArg(selected, "Input selection cannot be null");
+        requireNotNull(selected, "Input selection cannot be null");
         selected.forEach(i -> {
             bottom = Math.max(i, bottom);
             top = Math.min(i, top);
@@ -79,16 +79,7 @@ final class SelectionChangedEvent {
         if (isClearSelection()) {
             return false;
         }
-        switch (type) {
-        case BOTTOM:
-            return isSingleSelection() && bottom < totalRows - 1;
-        case DOWN:
-            return bottom < totalRows - 1;
-        case TOP:
-            return isSingleSelection() && top > 0;
-        default:
-            return top > 0;
-        }
+        return getTypeObject(type).canMove(this);
     }
 
     public int getTotalRows() {
@@ -115,7 +106,7 @@ final class SelectionChangedEvent {
      * @return the event where the total number of rows available has been set
      */
     public SelectionChangedEvent ofTotalRows(int totalNumberOfRows) {
-        requireArg(totalNumberOfRows >= 0, "Cannot select rows if no row is available");
+        require(totalNumberOfRows >= 0, "Cannot select rows if no row is available");
         this.totalRows = totalNumberOfRows;
         return this;
     }
@@ -124,4 +115,24 @@ final class SelectionChangedEvent {
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
+
+	private Type getTypeObject(MoveType type) {
+		switch (type) {
+		case BOTTOM:
+			return new Bottom();
+		case DOWN:
+			return new Down();
+		case TOP:
+			return new Top();
+		}
+		return null;
+	}
+
+	public int getBottom() {
+		return bottom;
+	}
+
+	public int getTop() {
+		return top;
+	}
 }

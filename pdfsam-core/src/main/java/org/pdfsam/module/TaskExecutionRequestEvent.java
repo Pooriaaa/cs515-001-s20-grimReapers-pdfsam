@@ -18,8 +18,9 @@
  */
 package org.pdfsam.module;
 
-import static org.sejda.commons.util.RequireUtils.requireNotBlank;
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.pdfsam.support.RequireUtils.require;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
 
 import org.sejda.model.parameter.base.AbstractParameters;
 
@@ -40,8 +41,8 @@ public class TaskExecutionRequestEvent {
      * @param parameters
      */
     public TaskExecutionRequestEvent(String moduleId, AbstractParameters parameters) {
-        requireNotNullArg(parameters, "Task parameters cannot be null");
-        requireNotBlank(moduleId, "Module id cannot be blank");
+        requireNotNull(parameters, "Task parameters cannot be null");
+        require(isNotBlank(moduleId), "Module id cannot be blank");
         this.parameters = parameters;
         this.moduleId = moduleId;
     }

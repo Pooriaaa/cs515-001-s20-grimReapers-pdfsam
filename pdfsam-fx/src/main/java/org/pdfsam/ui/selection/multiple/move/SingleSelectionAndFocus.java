@@ -18,7 +18,7 @@
  */
 package org.pdfsam.ui.selection.multiple.move;
 
-import static org.sejda.commons.util.RequireUtils.requireNotNegative;
+import static org.pdfsam.support.RequireUtils.requireNotNegative;
 
 /**
  * Single selection where the item selected is the one with focus

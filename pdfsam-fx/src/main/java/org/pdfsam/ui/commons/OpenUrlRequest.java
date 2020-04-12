@@ -18,7 +18,7 @@
  */
 package org.pdfsam.ui.commons;
 
-import static org.sejda.commons.util.RequireUtils.requireNotBlank;
+import static org.pdfsam.support.RequireUtils.requireNotBlank;
 
 /**
  * Request to open the given URL

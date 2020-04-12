@@ -18,8 +18,6 @@
  */
 package org.pdfsam.support.filter;
 
-import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
-
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
@@ -28,6 +26,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pdfsam.i18n.DefaultI18nContext;
 import org.pdfsam.support.validation.Validator;
+
+import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 /**
  * Types of filters that can be used in file chooser

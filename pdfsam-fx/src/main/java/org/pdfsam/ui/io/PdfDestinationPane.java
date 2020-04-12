@@ -23,9 +23,9 @@ import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
 import static org.pdfsam.ui.help.HelpUtils.helpIcon;
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
-import static org.pdfsam.eventstudio.StaticStudio.eventStudio;
+import static org.sejda.eventstudio.StaticStudio.eventStudio;
 
 import java.util.Map;
 import java.util.Optional;
@@ -43,8 +43,8 @@ import org.pdfsam.ui.io.PdfVersionCombo.DefaultPdfVersionComboItem;
 import org.pdfsam.ui.support.Style;
 import org.pdfsam.ui.support.Views;
 import org.pdfsam.ui.workspace.RestorableView;
-import org.pdfsam.eventstudio.annotation.EventListener;
-import org.pdfsam.eventstudio.annotation.EventStation;
+import org.sejda.eventstudio.annotation.EventListener;
+import org.sejda.eventstudio.annotation.EventStation;
 import org.sejda.model.output.ExistingOutputPolicy;
 import org.sejda.model.parameter.base.AbstractPdfOutputParameters;
 import org.sejda.model.pdf.PdfVersion;
@@ -79,7 +79,7 @@ public class PdfDestinationPane extends DestinationPane implements ModuleOwned, 
             boolean expandAdvanced, DestinationPanelFields... optionalFields) {
         super(destination);
         destination.setId(ownerModule + ".destination");
-        requireNotNullArg(userContext, "UserContext cannot be null");
+        requireNotNull(userContext, "UserContext cannot be null");
         this.userContext = userContext;
         this.ownerModule = defaultString(ownerModule);
         VBox advancedPanel = new VBox();

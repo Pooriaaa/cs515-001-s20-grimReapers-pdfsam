@@ -18,7 +18,7 @@
  */
 package org.pdfsam.ui.selection;
 
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
 
 import org.pdfsam.pdf.PdfDocumentDescriptor;
 
@@ -35,8 +35,8 @@ public class ShowPasswordFieldPopupRequest {
     private Region requestingNode;
 
     public ShowPasswordFieldPopupRequest(PdfDocumentDescriptor pdfDescriptor, Region requestingNode) {
-        requireNotNullArg(pdfDescriptor, "Cannot show password field popup for a null document");
-        requireNotNullArg(requestingNode, "Cannot show password field popup for a null node");
+        requireNotNull(pdfDescriptor, "Cannot show password field popup for a null document");
+        requireNotNull(requestingNode, "Cannot show password field popup for a null node");
         this.pdfDescriptor = pdfDescriptor;
         this.requestingNode = requestingNode;
     }
