@@ -21,7 +21,7 @@ package org.pdfsam.pdf;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static org.pdfsam.support.RequireUtils.requireNotNull;
+import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
 
 import java.io.File;
 import java.util.Collections;
@@ -33,7 +33,9 @@ import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.StringUtils;
+import org.pdfsam.i18n.DefaultI18nContext;
 import org.pdfsam.support.ObservableAtomicReference;
+import org.sejda.conversion.exception.ConversionException;
 import org.sejda.model.input.PdfFileSource;
 import org.sejda.model.pdf.PdfVersion;
 
@@ -56,7 +58,7 @@ public class PdfDocumentDescriptor {
     private SortedSet<Integer> validBookmarksLevels = Collections.emptySortedSet();
 
     private PdfDocumentDescriptor(File file, String password) {
-        requireNotNull(file, "Input file is mandatory");
+        requireNotNullArg(file, "Input file is mandatory");
         this.file = file;
         this.password = password;
     }
@@ -66,7 +68,13 @@ public class PdfDocumentDescriptor {
     }
 
     public PdfFileSource toPdfFileSource() {
-        return PdfFileSource.newInstanceWithPassword(file, password);
+        try {
+            return PdfFileSource.newInstanceWithPassword(file, password);
+        } catch (IllegalArgumentException e) {
+            throw new ConversionException(
+                    DefaultI18nContext.getInstance().i18n("File \"{0}\" does not exist or is invalid", file.getName()),
+                    e);
+        }
     }
 
     /**
