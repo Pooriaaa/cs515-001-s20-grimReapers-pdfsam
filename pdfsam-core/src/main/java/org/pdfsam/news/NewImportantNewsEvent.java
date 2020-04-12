@@ -18,7 +18,7 @@
  */
 package org.pdfsam.news;
 
-import org.sejda.commons.util.RequireUtils;
+import org.pdfsam.support.RequireUtils;
 
 /**
  * Notifies that a new important news is available
@@ -31,7 +31,7 @@ public class NewImportantNewsEvent {
     public final NewsData news;
 
     public NewImportantNewsEvent(NewsData news) {
-        RequireUtils.requireNotNullArg(news, "News cannot be null");
+        RequireUtils.requireNotNull(news, "News cannot be null");
         this.news = news;
     }
 }

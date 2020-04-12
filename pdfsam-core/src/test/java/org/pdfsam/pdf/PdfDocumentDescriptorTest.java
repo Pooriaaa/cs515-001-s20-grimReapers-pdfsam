@@ -31,7 +31,6 @@ import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sejda.conversion.exception.ConversionException;
 import org.sejda.model.input.PdfFileSource;
 import org.sejda.model.pdf.PdfVersion;
 
@@ -110,12 +109,6 @@ public class PdfDocumentDescriptorTest {
         PdfFileSource source = victim.toPdfFileSource();
         assertEquals(file, source.getSource());
         assertEquals("pwd", source.getPassword());
-    }
-
-    @Test(expected = ConversionException.class)
-    public void FailToPdfSource() {
-        when(file.isFile()).thenReturn(Boolean.FALSE);
-        victim.toPdfFileSource();
     }
 
     @Test

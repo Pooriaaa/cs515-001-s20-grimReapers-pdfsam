@@ -18,7 +18,7 @@
  */
 package org.pdfsam.support;
 
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
 
 import java.util.Locale;
 
@@ -37,7 +37,7 @@ public class LocaleKeyValueItem implements KeyValueItem<String, String>, Compara
     private Locale locale;
 
     public LocaleKeyValueItem(Locale locale) {
-        requireNotNullArg(locale, "Locale cannot be null");
+        requireNotNull(locale, "Locale cannot be null");
         this.locale = locale;
     }
 
@@ -75,7 +75,7 @@ public class LocaleKeyValueItem implements KeyValueItem<String, String>, Compara
 
     @Override
     public int compareTo(LocaleKeyValueItem o) {
-        requireNotNullArg(o, "Could not compare null elements");
+        requireNotNull(o, "Could not compare null elements");
         return getValue().compareTo(o.getValue());
     }
 }

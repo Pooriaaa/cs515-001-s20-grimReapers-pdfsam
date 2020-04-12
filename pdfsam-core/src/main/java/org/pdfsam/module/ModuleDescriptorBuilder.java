@@ -18,8 +18,9 @@
  */
 package org.pdfsam.module;
 
-import static org.sejda.commons.util.RequireUtils.requireNotBlank;
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.pdfsam.support.RequireUtils.require;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
 
 /**
  * Builder for the {@link ModuleDescriptor}
@@ -29,11 +30,11 @@ import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
  */
 public final class ModuleDescriptorBuilder {
 
-    private ModuleCategory category;
+    private ModuleDescriptorBuilderProduct moduleDescriptorBuilderProduct = new ModuleDescriptorBuilderProduct();
+	private ModuleCategory category;
     private ModuleInputOutputType[] inputTypes;
     private String name;
     private String description;
-    private int priority = ModulePriority.DEFAULT.getPriority();
     private String supportURL;
 
     private ModuleDescriptorBuilder() {
@@ -61,13 +62,11 @@ public final class ModuleDescriptorBuilder {
     }
 
     public ModuleDescriptorBuilder priority(int priority) {
-        this.priority = priority;
-        return this;
+        return moduleDescriptorBuilderProduct.priority(priority, this);
     }
 
     public ModuleDescriptorBuilder priority(ModulePriority priority) {
-        this.priority = priority.getPriority();
-        return this;
+        return moduleDescriptorBuilderProduct.priority(priority, this);
     }
 
     public ModuleDescriptorBuilder supportURL(String supportURL) {
@@ -85,9 +84,9 @@ public final class ModuleDescriptorBuilder {
     }
 
     public ModuleDescriptor build() {
-        requireNotNullArg(category, "Module category cannot be null");
-        requireNotBlank(name, "Module name cannot be blank");
-        requireNotBlank(description, "Module description cannot be blank");
-        return new ModuleDescriptor(category, name, description, priority, supportURL, inputTypes);
+        requireNotNull(category, "Module category cannot be null");
+        require(isNotBlank(name), "Module name cannot be blank");
+        require(isNotBlank(description), "Module description cannot be blank");
+        return new ModuleDescriptor(category, name, description, moduleDescriptorBuilderProduct.getPriority(), supportURL, inputTypes);
     }
 }

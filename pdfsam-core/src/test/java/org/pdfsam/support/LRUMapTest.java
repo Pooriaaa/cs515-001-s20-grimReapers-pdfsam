@@ -1,6 +1,6 @@
 /* 
  * This file is part of the PDF Split And Merge source code
- * Created on 12/dic/2014
+ * Created on 08/apr/2012
  * Copyright 2017 by Sober Lemur S.a.s. di Vacondio Andrea (info@pdfsam.org).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,28 +16,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.pdfsam.ui.workspace;
+package org.pdfsam.support;
 
-import static org.pdfsam.support.RequireUtils.requireNotNull;
+import java.util.Map;
 
-import java.io.File;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Base class for a workspace related event
- * 
  * @author Andrea Vacondio
- *
+ * 
  */
-abstract class BaseWorkspaceEvent {
-    private File workspace;
+public class LRUMapTest {
 
-    public BaseWorkspaceEvent(File workspace) {
-        requireNotNull(workspace, "Workspace file cannot be null");
-        this.workspace = workspace;
+    @Test
+    public void testPut() {
+        Map<String, String> victim = new LRUMap<>(2);
+        victim.put("1", "A");
+        victim.put("2", "B");
+        assertTrue(victim.size() == 2);
+        victim.put("3", "C");
+        assertTrue(victim.size() == 2);
+        assertFalse(victim.containsKey("1"));
     }
-
-    public File workspace() {
-        return workspace;
-    }
-
 }

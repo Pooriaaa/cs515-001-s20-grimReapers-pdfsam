@@ -21,9 +21,9 @@ package org.pdfsam.test;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.swing.SwingUtilities;
-
 import javafx.embed.swing.JFXPanel;
+
+import javax.swing.SwingUtilities;
 
 /**
  * Perform JavaFX thread initialization

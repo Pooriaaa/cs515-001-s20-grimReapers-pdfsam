@@ -18,7 +18,7 @@
  */
 package org.pdfsam.ui;
 
-import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
+import static org.pdfsam.support.RequireUtils.requireNotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -110,7 +110,7 @@ public class StageStatus {
     }
 
     public void setMode(StageMode mode) {
-        requireNotNullArg(mode, "Stage mode cannot be null");
+        requireNotNull(mode, "Stage mode cannot be null");
         this.mode = mode;
     }
 
