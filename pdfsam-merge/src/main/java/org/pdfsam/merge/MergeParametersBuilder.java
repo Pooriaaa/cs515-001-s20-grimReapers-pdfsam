@@ -18,17 +18,18 @@
  */
 package org.pdfsam.merge;
 
-import java.util.Set;
-
 import org.pdfsam.support.params.AbstractPdfOutputParametersBuilder;
 import org.pdfsam.support.params.SingleOutputTaskParametersBuilder;
-import org.sejda.commons.collection.NullSafeSet;
 import org.sejda.model.input.PdfMergeInput;
 import org.sejda.model.outline.OutlinePolicy;
 import org.sejda.model.output.FileTaskOutput;
 import org.sejda.model.parameter.MergeParameters;
 import org.sejda.model.pdf.form.AcroFormPolicy;
+import org.sejda.model.pdf.page.PageRange;
 import org.sejda.model.toc.ToCPolicy;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Builder for {@link MergeParameters}
@@ -39,7 +40,8 @@ import org.sejda.model.toc.ToCPolicy;
 class MergeParametersBuilder extends AbstractPdfOutputParametersBuilder<MergeParameters>
         implements SingleOutputTaskParametersBuilder<MergeParameters> {
 
-    private Set<PdfMergeInput> inputs = new NullSafeSet<>();
+    public MergeParametersBuilderProduct mergeParametersBuilderProduct = new MergeParametersBuilderProduct();
+	//private Multiset<PdfMergeInput> inputs = new HashMultiSet<>();
     private OutlinePolicy outlinePolicy = OutlinePolicy.RETAIN;
     private boolean blankIfOdd;
     private boolean footer;
@@ -49,11 +51,12 @@ class MergeParametersBuilder extends AbstractPdfOutputParametersBuilder<MergePar
     private FileTaskOutput output;
 
     void addInput(PdfMergeInput input) {
-        this.inputs.add(input);
+
+        mergeParametersBuilderProduct.addInput(input);
     }
 
-    boolean hasInput() {
-        return !inputs.isEmpty();
+	boolean hasInput() {
+        return mergeParametersBuilderProduct.hasInput();
     }
 
     void outlinePolicy(OutlinePolicy outlinePolicy) {
@@ -91,7 +94,7 @@ class MergeParametersBuilder extends AbstractPdfOutputParametersBuilder<MergePar
         params.setCompress(isCompress());
         params.setExistingOutputPolicy(existingOutput());
         params.setVersion(getVersion());
-        inputs.forEach(params::addInput);
+        mergeParametersBuilderProduct.getInputs().forEach(params::addInput);
         params.setOutlinePolicy(outlinePolicy);
         params.setBlankPageIfOdd(blankIfOdd);
         params.setAcroFormPolicy(formsPolicy);
