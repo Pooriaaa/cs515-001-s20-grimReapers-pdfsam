@@ -1,6 +1,6 @@
 /* 
  * This file is part of the PDF Split And Merge source code
- * Created on 12/dic/2014
+ * Created on 08/apr/2012
  * Copyright 2017 by Sober Lemur S.a.s. di Vacondio Andrea (info@pdfsam.org).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,28 +16,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.pdfsam.ui.workspace;
+package org.pdfsam.support;
 
-import static org.pdfsam.support.RequireUtils.requireNotNull;
-
-import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
- * Base class for a workspace related event
+ * Fixed size {@link Map} implementation removing the least recently used element when {@link Map#put(Object, Object)} is called.
  * 
  * @author Andrea Vacondio
- *
+ * @param <K>
+ *            key of the map
+ * @param <V>
+ *            value
  */
-abstract class BaseWorkspaceEvent {
-    private File workspace;
+public class LRUMap<K, V> extends LinkedHashMap<K, V> {
 
-    public BaseWorkspaceEvent(File workspace) {
-        requireNotNull(workspace, "Workspace file cannot be null");
-        this.workspace = workspace;
+    private int maxCapacity;
+
+    public LRUMap(int maxCapacity) {
+        super(maxCapacity, 0.75f, true);
+        this.maxCapacity = maxCapacity;
     }
 
-    public File workspace() {
-        return workspace;
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+        return size() > this.maxCapacity;
     }
-
 }

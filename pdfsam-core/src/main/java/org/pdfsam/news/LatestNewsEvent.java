@@ -21,7 +21,7 @@ package org.pdfsam.news;
 import java.util.Collections;
 import java.util.List;
 
-import org.sejda.commons.util.RequireUtils;
+import org.pdfsam.support.RequireUtils;
 
 /**
  * Response to a fetch latest news request
@@ -34,7 +34,7 @@ public class LatestNewsEvent {
     public final boolean isUpToDate;
 
     public LatestNewsEvent(List<NewsData> latestNews, boolean isUpToDate) {
-        RequireUtils.requireNotNullArg(latestNews, "Latest news cannot be null");
+        RequireUtils.requireNotNull(latestNews, "Latest news cannot be null");
         this.latestNews = Collections.unmodifiableList(latestNews);
         this.isUpToDate = isUpToDate;
     }

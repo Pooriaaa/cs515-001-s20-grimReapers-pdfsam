@@ -18,7 +18,8 @@
  */
 package org.pdfsam.update;
 
-import static org.sejda.commons.util.RequireUtils.requireNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.pdfsam.support.RequireUtils.require;
 
 /**
  * Event to notify a new version available.
@@ -31,7 +32,7 @@ public class UpdateAvailableEvent {
     public final String availableVersion;
 
     public UpdateAvailableEvent(String availableVersion) {
-        requireNotBlank(availableVersion, "Available version cannot be empty");
+        require(isNotBlank(availableVersion), "Available version cannot be empty");
         this.availableVersion = availableVersion;
     }
 }
